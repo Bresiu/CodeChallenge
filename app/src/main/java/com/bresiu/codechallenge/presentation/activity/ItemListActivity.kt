@@ -1,14 +1,15 @@
-package com.bresiu.codechallenge
+package com.bresiu.codechallenge.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.dummy.DummyContent
+import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
 import kotlinx.android.synthetic.main.item_list_content.view.*
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.item_list_content.view.*
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class ItemListActivity : AppCompatActivity() {
+class ItemListActivity : BaseActivity() {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet

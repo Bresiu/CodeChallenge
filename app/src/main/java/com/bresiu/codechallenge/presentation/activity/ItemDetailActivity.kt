@@ -1,9 +1,10 @@
-package com.bresiu.codechallenge
+package com.bresiu.codechallenge.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.bresiu.codechallenge.R
+import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
 import kotlinx.android.synthetic.main.activity_item_detail.*
 
 /**
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
  * item details are presented side-by-side with a list of items
  * in a [ItemListActivity].
  */
-class ItemDetailActivity : AppCompatActivity() {
+class ItemDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
