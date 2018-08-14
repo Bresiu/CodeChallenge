@@ -1,10 +1,10 @@
-package com.bresiu.codechallenge.db;
+package com.bresiu.codechallenge.data;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
-import com.bresiu.codechallenge.db.entity.Album;
-import com.bresiu.codechallenge.db.entity.Post;
-import com.bresiu.codechallenge.db.entity.User;
+import com.bresiu.codechallenge.data.entity.Album;
+import com.bresiu.codechallenge.data.entity.Post;
+import com.bresiu.codechallenge.data.entity.User;
 
 @Database(entities = { User.class, Post.class, Album.class, }, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
