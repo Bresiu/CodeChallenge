@@ -1,9 +1,9 @@
-package com.bresiu.codechallenge.dependencyinjection;
+package com.bresiu.codechallenge.di.module;
 
 import com.bresiu.codechallenge.presentation.activity.ItemListActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
-@Module abstract class ItemListActivityModule {
+@Module public abstract class ItemListActivityModule {
 	@ContributesAndroidInjector abstract ItemListActivity contributeItemListActivity();
 }

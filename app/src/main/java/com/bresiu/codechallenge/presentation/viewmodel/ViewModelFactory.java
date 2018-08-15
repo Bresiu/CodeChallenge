@@ -4,16 +4,16 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
-import com.bresiu.codechallenge.dependencyinjection.ViewModelSubComponent;
+import com.bresiu.codechallenge.di.component.ViewModelSubComponent;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-@Singleton public class CodeChallengeViewModelFactory implements ViewModelProvider.Factory {
+@Singleton public class ViewModelFactory implements ViewModelProvider.Factory {
 	private final ArrayMap<Class, Callable<? extends ViewModel>> creators;
 
-	@Inject public CodeChallengeViewModelFactory(final ViewModelSubComponent viewModelSubComponent) {
+	@Inject public ViewModelFactory(final ViewModelSubComponent viewModelSubComponent) {
 		creators = new ArrayMap<>();
 		creators.put(ItemListViewModel.class, new Callable<ViewModel>() {
 			@Override public ViewModel call() throws Exception {

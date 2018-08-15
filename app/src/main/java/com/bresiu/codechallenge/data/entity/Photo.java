@@ -1,17 +1,17 @@
 package com.bresiu.codechallenge.data.entity;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Album.class, parentColumns = "id", childColumns = "album_id", onDelete = ForeignKey.CASCADE))
+@Entity(indices = {@Index("albumId")}, tableName = "photos", foreignKeys = @ForeignKey(entity = Album.class, parentColumns = "id", childColumns = "albumId", onDelete = ForeignKey.CASCADE))
 public class Photo {
-	@PrimaryKey long id;
-	@ColumnInfo(name = "album_id") long albumId;
-	String title;
-	String url;
-	@ColumnInfo(name = "thumbnail_url") String thumbnailUrl;
+	@PrimaryKey public long id;
+	public long albumId;
+	public String title;
+	public String url;
+	public String thumbnailUrl;
 
 	public Photo(long id, long albumId, String title, String url, String thumbnailUrl) {
 		this.id = id;
@@ -19,25 +19,5 @@ public class Photo {
 		this.title = title;
 		this.url = url;
 		this.thumbnailUrl = thumbnailUrl;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public long getAlbumId() {
-		return albumId;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public String getThumbnailUrl() {
-		return thumbnailUrl;
 	}
 }

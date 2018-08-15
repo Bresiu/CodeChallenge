@@ -1,9 +1,9 @@
 package com.bresiu.codechallenge.repository;
 
-import com.bresiu.codechallenge.repository.entity.Album;
-import com.bresiu.codechallenge.repository.entity.Photo;
-import com.bresiu.codechallenge.repository.entity.Post;
-import com.bresiu.codechallenge.repository.entity.User;
+import com.bresiu.codechallenge.model.Album;
+import com.bresiu.codechallenge.model.Photo;
+import com.bresiu.codechallenge.model.Post;
+import com.bresiu.codechallenge.model.User;
 import io.reactivex.Observable;
 import java.util.List;
 import javax.inject.Inject;
@@ -12,10 +12,10 @@ import retrofit2.Retrofit;
 import retrofit2.http.GET;
 
 @Singleton public class ApiRepository {
-	public static final String API_ENDPOINT = "http://jsonplaceholder.typicode.com/";
+	public static final String API_ENDPOINT = "https://jsonplaceholder.typicode.com/";
 	private final CodeChallengeService codeChallengeService;
 
-	@Inject public ApiRepository(Retrofit retrofit) {
+	@Inject ApiRepository(Retrofit retrofit) {
 		codeChallengeService = retrofit.create(CodeChallengeService.class);
 	}
 

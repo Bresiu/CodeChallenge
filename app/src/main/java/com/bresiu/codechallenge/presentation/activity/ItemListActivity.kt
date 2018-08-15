@@ -10,24 +10,17 @@ import android.widget.TextView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.dummy.DummyContent
 import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
+import com.bresiu.codechallenge.repository.Repository
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
 import kotlinx.android.synthetic.main.item_list_content.view.*
+import javax.inject.Inject
 
-/**
- * An activity representing a list of Pings. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a [ItemDetailActivity] representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
 class ItemListActivity : BaseActivity() {
-
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
+    @Inject
+    lateinit var repository: Repository
+    private val composite = CompositeDisposable()
     private var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +39,12 @@ class ItemListActivity : BaseActivity() {
         }
 
         setupRecyclerView(item_list)
+        composite.add(repository.fetchAndSaveData())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        composite.dispose()
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {

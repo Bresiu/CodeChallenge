@@ -2,7 +2,7 @@ package com.bresiu.codechallenge
 
 import android.app.Activity
 import android.app.Application
-import com.bresiu.codechallenge.dependencyinjection.AppInjector
+import com.bresiu.codechallenge.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject

@@ -1,9 +1,10 @@
-package com.bresiu.codechallenge.dependencyinjection;
+package com.bresiu.codechallenge.di;
 
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import com.bresiu.codechallenge.CodeChallengeApp;
+import com.bresiu.codechallenge.di.component.DaggerAppComponent;
 import com.bresiu.codechallenge.presentation.activity.BaseActivity;
 import dagger.android.AndroidInjection;
 
