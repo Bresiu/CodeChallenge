@@ -19,19 +19,19 @@ import retrofit2.http.GET;
 		codeChallengeService = retrofit.create(CodeChallengeService.class);
 	}
 
-	public Observable<List<User>> getUsers() {
+	Observable<List<User>> getUsers() {
 		return codeChallengeService.getUsers();
 	}
 
-	public Observable<List<Album>> getAlbums() {
+	Observable<List<Album>> getAlbums() {
 		return codeChallengeService.getAlbums();
 	}
 
-	public Observable<List<Photo>> getPhotos() {
+	Observable<List<Photo>> getPhotos() {
 		return codeChallengeService.getPhotos();
 	}
 
-	public Observable<List<Post>> getPosts() {
+	Observable<List<Post>> getPosts() {
 		return codeChallengeService.getPosts();
 	}
 

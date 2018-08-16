@@ -1,17 +1,13 @@
 package com.bresiu.codechallenge.repository;
 
+import android.arch.lifecycle.LiveData;
 import android.support.annotation.WorkerThread;
 import com.bresiu.codechallenge.data.Dao;
-import com.bresiu.codechallenge.model.Album;
-import com.bresiu.codechallenge.model.Photo;
-import com.bresiu.codechallenge.model.Post;
-import com.bresiu.codechallenge.model.User;
+import com.bresiu.codechallenge.data.entity.Album;
+import com.bresiu.codechallenge.data.entity.Photo;
+import com.bresiu.codechallenge.data.entity.Post;
+import com.bresiu.codechallenge.model.PostWithUserAddress;
 import com.bresiu.codechallenge.model.UserCombined;
-import com.bresiu.codechallenge.repository.mappers.AlbumModelToEntityMapper;
-import com.bresiu.codechallenge.repository.mappers.Mapper;
-import com.bresiu.codechallenge.repository.mappers.PhotoModelToEntityMapper;
-import com.bresiu.codechallenge.repository.mappers.PostModelToEntityMapper;
-import com.bresiu.codechallenge.repository.mappers.UserCombinedModelToEntitiesMapper;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,8 +19,7 @@ import javax.inject.Singleton;
 		this.dao = dao;
 	}
 
-	void saveUsers(List<User> users) {
-		UserCombined userCombined = Mapper.mapObject(users, new UserCombinedModelToEntitiesMapper());
+	void saveUsers(UserCombined userCombined) {
 		dao.insertUsers(userCombined.users);
 		dao.insertAddresses(userCombined.addresses);
 		dao.insertGeos(userCombined.geos);
@@ -32,14 +27,18 @@ import javax.inject.Singleton;
 	}
 
 	void savePosts(List<Post> posts) {
-		dao.insertPosts(Mapper.mapList(posts, new PostModelToEntityMapper()));
+		dao.insertPosts(posts);
 	}
 
 	void saveAlbums(List<Album> albums) {
-		dao.insertAlbums(Mapper.mapList(albums, new AlbumModelToEntityMapper()));
+		dao.insertAlbums(albums);
 	}
 
 	void savePhotos(List<Photo> photos) {
-		dao.insertPhotos(Mapper.mapList(photos, new PhotoModelToEntityMapper()));
+		dao.insertPhotos(photos);
+	}
+
+	LiveData<List<PostWithUserAddress>> fetchPostsWithUserAddress() {
+		return dao.loadAllPostWithUserAddress();
 	}
 }
