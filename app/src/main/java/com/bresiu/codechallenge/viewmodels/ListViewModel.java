@@ -12,6 +12,7 @@ import com.bresiu.codechallenge.data.entity.EntitiesCombined;
 import com.bresiu.codechallenge.model.PostWithUserAddress;
 import com.bresiu.codechallenge.repository.Repository;
 import com.bresiu.codechallenge.viewmodels.uimodels.Result;
+import com.bresiu.codechallenge.viewmodels.uimodels.ResultBundle;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -21,8 +22,7 @@ import javax.inject.Inject;
 public class ListViewModel extends ViewModel {
 	private final Repository repository;
 	private final CompositeDisposable compositeDisposable;
-	private MediatorLiveData<Result> mediatorLiveData;
-	private MutableLiveData<Result> mutableLiveData;
+	private MutableLiveData<Result<List<PostWithUserAddress>>> mutableLiveData;
 
 	@Inject ListViewModel(Repository repository) {
 		this.repository = repository;
@@ -32,13 +32,15 @@ public class ListViewModel extends ViewModel {
 	}
 
 	private void initLiveData() {
-		mediatorLiveData = new MediatorLiveData<>();
-		mediatorLiveData.addSource(repository.getLiveData(), new Observer<List<PostWithUserAddress>>() {
-			@Override public void onChanged(@Nullable List<PostWithUserAddress> postWithUserAddresses) {
-				ResultBundle
-				mutableLiveData.postValue(Result.successResult());
-			}
-		});
+		mutableLiveData = new MutableLiveData<>();
+		new MediatorLiveData<>().addSource(repository.getLiveData(),
+				new Observer<List<PostWithUserAddress>>() {
+					@Override
+					public void onChanged(@Nullable List<PostWithUserAddress> postWithUserAddresses) {
+						mutableLiveData.postValue(
+								Result.successResult(new ResultBundle<>(postWithUserAddresses)));
+					}
+				});
 	}
 
 	@Override protected void onCleared() {
@@ -46,17 +48,17 @@ public class ListViewModel extends ViewModel {
 		super.onCleared();
 	}
 
-	public LiveData<Result> getLiveData() {
+	public LiveData<Result<List<PostWithUserAddress>>> getLiveData() {
 		return mutableLiveData;
 	}
 
 	private void fetchData() {
-		compositeDisposable.add(repository.fetchData().start
+		compositeDisposable.add(repository.fetchData()
 				.observeOn(AndroidSchedulers.mainThread())
 				.doOnError(new Consumer<Throwable>() {
 					@Override public void accept(Throwable throwable) {
 						Log.d("BRS", "doOnError Main thread: " + (Looper.myLooper() == Looper.getMainLooper()));
-						mutableLiveData.postValue(Result.errorResult(throwable));
+						mutableLiveData.postValue(Result.<List<PostWithUserAddress>>errorResult(throwable));
 					}
 				})
 				.subscribe(new Consumer<EntitiesCombined>() {

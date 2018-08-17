@@ -1,33 +1,44 @@
 package com.bresiu.codechallenge.viewmodels.uimodels;
 
-public final class Result<B> {
-	private static final String LOADING = "loading";
-	private static final String ERROR = "error";
-	private static final String SUCCESS = "success";
-	private final String state;
-	private final boolean isLoading;
-	private final boolean isSuccessful;
-	private final Throwable error;
-	private ResultBundle resultBundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-	public Result(String state, boolean isLoading, boolean isSuccessful, Throwable error,
-			ResultBundle resultBundle) {
+public final class Result<B> {
+	public static final String LOADING = "loading";
+	public static final String ERROR = "error";
+	public static final String SUCCESS = "success";
+	@NonNull private final String state;
+	@Nullable private final Throwable error;
+	@Nullable private ResultBundle<B> resultBundle;
+
+	private Result(@NonNull String state, @Nullable Throwable error,
+			@Nullable ResultBundle<B> resultBundle) {
 		this.state = state;
-		this.isLoading = isLoading;
-		this.isSuccessful = isSuccessful;
 		this.error = error;
 		this.resultBundle = resultBundle;
 	}
 
 	public static <B> Result<B> loadingResult() {
-		return new Result<>(LOADING, true, false, null, null);
+		return new Result<>(LOADING, null, null);
 	}
 
 	public static <B> Result<B> errorResult(Throwable error) {
-		return new Result<>(ERROR, false, false, error, null);
+		return new Result<>(ERROR, error, null);
 	}
 
-	public static <B> Result<B> successResult(ResultBundle<?, B> bundle) {
-		return new Result<>(SUCCESS, false, true, null, bundle);
+	public static <B> Result<B> successResult(ResultBundle<B> bundle) {
+		return new Result<>(SUCCESS, null, bundle);
+	}
+
+	@NonNull public String getState() {
+		return state;
+	}
+
+	@Nullable public Throwable getError() {
+		return error;
+	}
+
+	public ResultBundle<B> getBundle() {
+		return resultBundle;
 	}
 }

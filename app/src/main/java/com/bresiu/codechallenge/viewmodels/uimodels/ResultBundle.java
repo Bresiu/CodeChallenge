@@ -1,13 +1,13 @@
 package com.bresiu.codechallenge.viewmodels.uimodels;
 
-private class ResultBundle<E extends BaseEvent, B> {
+public class ResultBundle<E> {
+	private final E bundle;
 
-	private final String event;
-	private final B bundle;
-
-	ResultBundle(E event, B bundle) {
-		this.event = event.getClass().getSimpleName();
+	public ResultBundle(E bundle) {
 		this.bundle = bundle;
 	}
-	//... getters
+
+	public E getBundle() {
+		return bundle;
+	}
 }

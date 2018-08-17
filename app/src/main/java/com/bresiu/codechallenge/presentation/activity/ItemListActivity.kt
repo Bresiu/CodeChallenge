@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.SimpleItemRecyclerViewAdapter
 import com.bresiu.codechallenge.dummy.DummyContent
+import com.bresiu.codechallenge.model.PostWithUserAddress
 import com.bresiu.codechallenge.viewmodels.ListViewModel
 import com.bresiu.codechallenge.viewmodels.uimodels.Result
 import kotlinx.android.synthetic.main.activity_item_list.*
@@ -36,8 +37,22 @@ class ItemListActivity : BaseActivity() {
         })
     }
 
-    private fun updateUI(uiModel: Result?) {
+    private fun updateUI(uiModel: Result<List<PostWithUserAddress>>?) {
+        when (uiModel?.state) {
+            Result.LOADING -> onLoading()
+            Result.ERROR -> onError(uiModel.error)
+            Result.SUCCESS -> onSuccess(uiModel.bundle)
+        }
+    }
 
+    private fun onSuccess(resultBundle: List<PostWithUserAddress>) {
+        re
+    }
+
+    private fun onError(error: Throwable?) {
+    }
+
+    private fun onLoading() {
     }
 
     private fun setupContainer() {
