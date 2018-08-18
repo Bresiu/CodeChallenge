@@ -1,13 +1,11 @@
 package com.bresiu.codechallenge.di.component
 
-import com.bresiu.codechallenge.presentation.viewmodel.ItemDetailViewModel
-import com.bresiu.codechallenge.presentation.viewmodel.ItemListViewModel
+import com.bresiu.codechallenge.presentation.viewmodel.ListViewModel
 import dagger.Subcomponent
 
 @Subcomponent
 interface ViewModelSubComponent {
-    fun itemListViewModel(): ItemListViewModel
-    fun itemDetailViewModel(): ItemDetailViewModel
+    fun itemListViewModel(): ListViewModel
 
     @Subcomponent.Builder
     interface Builder {

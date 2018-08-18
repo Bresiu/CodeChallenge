@@ -1,8 +1,8 @@
 package com.bresiu.codechallenge.data.entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "geos", foreignKeys = @ForeignKey(entity = Address.class, parentColumns = "userId", childColumns = "addressId", onDelete = ForeignKey.CASCADE))
 public class Geo {

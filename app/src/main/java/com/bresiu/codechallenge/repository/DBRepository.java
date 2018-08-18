@@ -1,7 +1,7 @@
 package com.bresiu.codechallenge.repository;
 
-import android.arch.lifecycle.LiveData;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.WorkerThread;
+import androidx.lifecycle.LiveData;
 import com.bresiu.codechallenge.data.Dao;
 import com.bresiu.codechallenge.data.entity.Album;
 import com.bresiu.codechallenge.data.entity.Photo;

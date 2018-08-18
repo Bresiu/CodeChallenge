@@ -1,16 +1,16 @@
 package com.bresiu.codechallenge.presentation.activity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import android.util.Log
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
-import com.bresiu.codechallenge.adapters.SimpleItemRecyclerViewAdapter
-import com.bresiu.codechallenge.dummy.DummyContent
+import com.bresiu.codechallenge.adapters.ListViewItemAdapter
 import com.bresiu.codechallenge.model.PostWithUserAddress
-import com.bresiu.codechallenge.viewmodels.ListViewModel
-import com.bresiu.codechallenge.viewmodels.uimodels.Result
+import com.bresiu.codechallenge.presentation.uimodels.Result
+import com.bresiu.codechallenge.presentation.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
 import javax.inject.Inject
@@ -20,6 +20,7 @@ class ItemListActivity : BaseActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var listViewModel: ListViewModel
     private var twoPane: Boolean = false
+    private lateinit var adapter: ListViewItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +42,13 @@ class ItemListActivity : BaseActivity() {
         when (uiModel?.state) {
             Result.LOADING -> onLoading()
             Result.ERROR -> onError(uiModel.error)
-            Result.SUCCESS -> onSuccess(uiModel.bundle)
+            Result.SUCCESS -> onSuccess(uiModel.bundle.unpack())
         }
     }
 
     private fun onSuccess(resultBundle: List<PostWithUserAddress>) {
-        re
+        Log.d("BRS", "onSuccess " + resultBundle.size)
+        adapter.addData(resultBundle)
     }
 
     private fun onError(error: Throwable?) {
@@ -67,7 +69,8 @@ class ItemListActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, twoPane)
+        adapter = ListViewItemAdapter(this, twoPane)
+        recyclerView.adapter = adapter
     }
 
     private fun initViewModel() {

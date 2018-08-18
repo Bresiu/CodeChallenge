@@ -1,8 +1,8 @@
 package com.bresiu.codechallenge.di.module;
 
 import android.app.Application;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.persistence.room.Room;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 import com.bresiu.codechallenge.data.AppDatabase;
 import com.bresiu.codechallenge.data.Dao;
 import com.bresiu.codechallenge.di.component.ViewModelSubComponent;

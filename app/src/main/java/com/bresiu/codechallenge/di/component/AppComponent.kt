@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [(AndroidInjectionModule::class), (AppModule::class), (ItemListActivityModule::class), (ItemDetailActivityModule::class)])
-interface AppComponent {
+public interface AppComponent {
     fun inject(codeChallengeApp: CodeChallengeApp)
 
     @Component.Builder

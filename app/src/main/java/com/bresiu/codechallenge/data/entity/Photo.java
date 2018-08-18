@@ -1,9 +1,9 @@
 package com.bresiu.codechallenge.data.entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 @Entity(indices = {@Index("albumId")}, tableName = "photos", foreignKeys = @ForeignKey(entity = Album.class, parentColumns = "id", childColumns = "albumId", onDelete = ForeignKey.CASCADE))
 public class Photo {

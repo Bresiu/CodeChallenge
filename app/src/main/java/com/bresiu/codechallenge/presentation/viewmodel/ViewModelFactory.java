@@ -1,9 +1,9 @@
 package com.bresiu.codechallenge.presentation.viewmodel;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
+import androidx.annotation.NonNull;
+import androidx.collection.ArrayMap;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import com.bresiu.codechallenge.di.component.ViewModelSubComponent;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -15,8 +15,8 @@ import javax.inject.Singleton;
 
 	@Inject public ViewModelFactory(final ViewModelSubComponent viewModelSubComponent) {
 		creators = new ArrayMap<>();
-		creators.put(ItemListViewModel.class, new Callable<ViewModel>() {
-			@Override public ViewModel call() throws Exception {
+		creators.put(ListViewModel.class, new Callable<ViewModel>() {
+			@Override public ViewModel call() {
 				return viewModelSubComponent.itemListViewModel();
 			}
 		});

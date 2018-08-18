@@ -12,14 +12,7 @@
 		android:showDividers="middle"
 		tools:context=".presentation.activity.ItemListActivity">
 
-	<!--
-    This layout is a two-pane layout for the Items
-    master/detail flow.
-    
-    -->
-
-	<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-			xmlns:tools="http://schemas.android.com/tools"
+	<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/item_list"
 			android:name="com.bresiu.codechallenge.ItemListFragment"
 			android:layout_width="@dimen/item_width"
@@ -28,7 +21,7 @@
 			android:layout_marginRight="16dp"
 			app:layoutManager="LinearLayoutManager"
 			tools:context="com.bresiu.codechallenge.presentation.activity.ItemListActivity"
-			tools:listitem="@layout/item_list_content"/>
+			tools:listitem="@layout/post_content"/>
 
 	<FrameLayout
 			android:id="@+id/item_detail_container"

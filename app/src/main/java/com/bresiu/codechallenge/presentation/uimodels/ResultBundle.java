@@ -1,4 +1,4 @@
-package com.bresiu.codechallenge.viewmodels.uimodels;
+package com.bresiu.codechallenge.presentation.uimodels;
 
 public class ResultBundle<E> {
 	private final E bundle;
@@ -7,7 +7,7 @@ public class ResultBundle<E> {
 		this.bundle = bundle;
 	}
 
-	public E getBundle() {
+	public E unpack() {
 		return bundle;
 	}
 }

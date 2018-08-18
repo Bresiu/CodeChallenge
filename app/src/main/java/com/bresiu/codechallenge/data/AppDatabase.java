@@ -1,7 +1,7 @@
 package com.bresiu.codechallenge.data;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 import com.bresiu.codechallenge.data.entity.Address;
 import com.bresiu.codechallenge.data.entity.Album;
 import com.bresiu.codechallenge.data.entity.Company;

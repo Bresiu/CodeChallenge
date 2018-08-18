@@ -1,11 +1,11 @@
 package com.bresiu.codechallenge.data;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.WorkerThread;
+import androidx.lifecycle.LiveData;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 import com.bresiu.codechallenge.data.entity.Address;
 import com.bresiu.codechallenge.data.entity.Album;
 import com.bresiu.codechallenge.data.entity.Company;
@@ -16,7 +16,7 @@ import com.bresiu.codechallenge.data.entity.User;
 import com.bresiu.codechallenge.model.PostWithUserAddress;
 import java.util.List;
 
-@WorkerThread @android.arch.persistence.room.Dao public interface Dao {
+@WorkerThread @androidx.room.Dao public interface Dao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE) void insertUsers(List<User> users);
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE) void insertAddresses(List<Address> addresses);

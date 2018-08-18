@@ -8,7 +8,8 @@ import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
 class CodeChallengeApp : Application(), HasActivityInjector {
-    @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
