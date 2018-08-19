@@ -5,6 +5,9 @@ apply plugin: 'kotlin-kapt'
 
 android {
 	compileSdkVersion 28
+	dataBinding {
+		enabled = true
+	}
 	defaultConfig {
 		applicationId "com.bresiu.codechallenge"
 		minSdkVersion 24
@@ -12,6 +15,7 @@ android {
 		versionCode 1
 		versionName "1.0"
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		vectorDrawables.useSupportLibrary = true
 	}
 	buildTypes {
 		release {

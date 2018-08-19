@@ -14,8 +14,11 @@
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/post_content"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/list_padding"
+			android:layout_marginTop="@dimen/list_padding"
 			android:onClick="@{clickListener}">
 
 		<TextView
@@ -23,7 +26,9 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:text="@{post.postTitle}"
-				app:layout_constraintEnd_toEndOf="parent"
+				android:textAppearance="?attr/textAppearanceSearchResultTitle"
+				android:layout_marginBottom="8dp"
+				app:layout_constraintEnd_toStartOf="@+id/delete"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
 				tools:text="Post title"/>
@@ -32,12 +37,23 @@
 				android:id="@+id/user_address"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="@{post.usedEmail}"
-				android:textAppearance="?attr/textAppearanceListItem"
-				app:layout_constraintEnd_toEndOf="parent"
+				android:text="@{post.userEmail}"
+				android:textAppearance="?attr/textAppearanceSearchResultSubtitle"
+				app:layout_constraintEnd_toStartOf="@+id/delete"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/post_title"
+				app:layout_constraintTop_toBottomOf="@+id/post_title"
 				tools:text="name@domain.com"/>
+
+		<ImageView
+				android:id="@+id/delete"
+				android:layout_width="0dp"
+				android:layout_height="20dp"
+				android:layout_marginStart="8dp"
+				android:tint="@android:color/tab_indicator_text"
+				android:onClick="@{clickListener}"
+				app:srcCompat="@drawable/close_circle"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent" android:contentDescription="@string/delete_post"/>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

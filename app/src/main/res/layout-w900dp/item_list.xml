@@ -4,24 +4,27 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_marginLeft="16dp"
-		android:layout_marginRight="16dp"
 		android:baselineAligned="false"
 		android:divider="?android:attr/dividerHorizontal"
 		android:orientation="horizontal"
 		android:showDividers="middle"
+		android:padding="@dimen/list_padding"
 		tools:context=".presentation.activity.ItemListActivity">
 
 	<androidx.recyclerview.widget.RecyclerView
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:app="http://schemas.android.com/apk/res-auto"
+			xmlns:tools="http://schemas.android.com/tools"
 			android:id="@+id/item_list"
-			android:name="com.bresiu.codechallenge.ItemListFragment"
-			android:layout_width="@dimen/item_width"
+			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			app:layoutManager="LinearLayoutManager"
-			tools:context="com.bresiu.codechallenge.presentation.activity.ItemListActivity"
-			tools:listitem="@layout/post_content"/>
+			android:paddingEnd="@dimen/list_padding"
+			android:paddingStart="@dimen/list_padding"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			tools:context=".presentation.activity.ItemListActivity"
+			tools:listitem="@layout/post_content"
+			android:clipToPadding="false"
+			android:clipChildren="true"/>
 
 	<FrameLayout
 			android:id="@+id/item_detail_container"

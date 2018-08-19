@@ -4,7 +4,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import com.bresiu.codechallenge.data.entity.EntitiesCombined;
@@ -20,7 +19,7 @@ import javax.inject.Inject;
 public class ListViewModel extends ViewModel {
 	private final Repository repository;
 	private final CompositeDisposable compositeDisposable;
-	private MutableLiveData<Result<List<PostWithUserAddress>>> mutableLiveData;
+	private MediatorLiveData<Result<List<PostWithUserAddress>>> mediatorLiveData;
 
 	@Inject ListViewModel(Repository repository) {
 		this.repository = repository;
@@ -31,27 +30,17 @@ public class ListViewModel extends ViewModel {
 
 	private void initLiveData() {
 		Log.d("BRS", "initLiveData");
-		mutableLiveData = new MutableLiveData<>();
-		repository.getLiveData().observeForever(new Observer<List<PostWithUserAddress>>() {
-			@Override public void onChanged(List<PostWithUserAddress> postWithUserAddresses) {
-				Log.d("BRS", "onChanged!!!!");
-				postWithUserAddresses.forEach(new java.util.function.Consumer<PostWithUserAddress>() {
-					@Override public void accept(PostWithUserAddress postWithUserAddress) {
-						Log.d("BRS", "post: " + postWithUserAddress);
-					}
-				});
-			}
-		});
-		mutableLiveData.postValue(Result.<List<PostWithUserAddress>>loadingResult());
-		new MediatorLiveData<>().addSource(repository.getLiveData(),
+		mediatorLiveData = new MediatorLiveData<>();
+		mediatorLiveData.addSource(repository.getLiveData(),
 				new Observer<List<PostWithUserAddress>>() {
 					@Override
 					public void onChanged(@Nullable List<PostWithUserAddress> postWithUserAddresses) {
 						Log.d("BRS", "onChanged");
-						mutableLiveData.postValue(
+						mediatorLiveData.postValue(
 								Result.successResult(new ResultBundle<>(postWithUserAddresses)));
 					}
 				});
+		mediatorLiveData.postValue(Result.<List<PostWithUserAddress>>loadingResult());
 	}
 
 	@Override protected void onCleared() {
@@ -60,7 +49,7 @@ public class ListViewModel extends ViewModel {
 	}
 
 	public LiveData<Result<List<PostWithUserAddress>>> getLiveData() {
-		return mutableLiveData;
+		return mediatorLiveData;
 	}
 
 	private void fetchData() {
@@ -71,7 +60,7 @@ public class ListViewModel extends ViewModel {
 			}
 		}, new Consumer<Throwable>() {
 			@Override public void accept(Throwable throwable) {
-				mutableLiveData.postValue(Result.<List<PostWithUserAddress>>errorResult(throwable));
+				mediatorLiveData.postValue(Result.<List<PostWithUserAddress>>errorResult(throwable));
 			}
 		}));
 	}

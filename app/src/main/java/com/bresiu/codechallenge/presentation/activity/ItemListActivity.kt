@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.ListViewItemAdapter
@@ -14,6 +15,7 @@ import com.bresiu.codechallenge.presentation.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
 import javax.inject.Inject
+
 
 class ItemListActivity : BaseActivity() {
     @Inject
@@ -52,9 +54,11 @@ class ItemListActivity : BaseActivity() {
     }
 
     private fun onError(error: Throwable?) {
+        Log.d("BRS", "onError " + error?.message)
     }
 
     private fun onLoading() {
+        Log.d("BRS", "onLoading")
     }
 
     private fun setupContainer() {
@@ -69,8 +73,9 @@ class ItemListActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        adapter = ListViewItemAdapter(this, twoPane)
+        adapter = ListViewItemAdapter()
         recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 
     private fun initViewModel() {
