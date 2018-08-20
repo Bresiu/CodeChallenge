@@ -1,5 +1,6 @@
 package com.bresiu.codechallenge.presentation.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.ListViewItemAdapter
 import com.bresiu.codechallenge.model.PostWithUserAddress
+import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
 import com.bresiu.codechallenge.presentation.uimodels.Result
 import com.bresiu.codechallenge.presentation.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_item_list.*
@@ -73,12 +75,35 @@ class ItemListActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        adapter = ListViewItemAdapter()
+        adapter = ListViewItemAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 
     private fun initViewModel() {
         listViewModel = ViewModelProviders.of(this, viewModelFactory).get(ListViewModel::class.java)
+    }
+
+    fun navigateToDetails(item: PostWithUserAddress) {
+        if (twoPane) {
+            val fragment = ItemDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
+                }
+            }
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit()
+        } else {
+            val intent = Intent(this, ItemDetailActivity::class.java).apply {
+                putExtra(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
+            }
+            startActivity(intent)
+        }
+    }
+
+    fun deletePostById(postId: Long) {
+        listViewModel.deletePostById(postId)
     }
 }

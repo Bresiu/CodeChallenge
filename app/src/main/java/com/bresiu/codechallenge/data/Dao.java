@@ -2,7 +2,6 @@ package com.bresiu.codechallenge.data;
 
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -31,8 +30,8 @@ import java.util.List;
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE) void insertPosts(List<Post> posts);
 
-	@Delete void deletePost(Post post);
+	@Query("DELETE FROM posts WHERE id = :postId") void deletePostById(long postId);
 
-	@Query("SELECT posts.title AS postTitle, users.email AS userEmail FROM posts, users WHERE posts.userId = users.id")
+	@Query("SELECT posts.title AS postTitle, posts.id AS postId, users.email AS userEmail FROM posts, users WHERE posts.userId = users.id")
 	LiveData<List<PostWithUserAddress>> loadAllPostWithUserAddress();
 }

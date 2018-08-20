@@ -1,6 +1,5 @@
 package com.bresiu.codechallenge.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.databinding.PostContentBinding
 import com.bresiu.codechallenge.model.PostWithUserAddress
+import com.bresiu.codechallenge.presentation.activity.ItemListActivity
 
 
-class ListViewItemAdapter : RecyclerView.Adapter<ListViewItemAdapter.ViewHolder>() {
-
+class ListViewItemAdapter(private val parentActivity: ItemListActivity) : RecyclerView.Adapter<ListViewItemAdapter.ViewHolder>() {
     private val data: MutableList<PostWithUserAddress> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,6 +37,7 @@ class ListViewItemAdapter : RecyclerView.Adapter<ListViewItemAdapter.ViewHolder>
     }
 
     private fun deleteItemAtPosition(position: Int) {
+        parentActivity.deletePostById(data[position].postId)
         data.removeAt(position)
         notifyItemRemoved(position)
     }
@@ -56,25 +56,8 @@ class ListViewItemAdapter : RecyclerView.Adapter<ListViewItemAdapter.ViewHolder>
         return View.OnClickListener {
             when (it.id) {
                 R.id.delete -> deleteItemAtPosition(holder.layoutPosition)
-                R.id.post_content -> Log.d("BRS", "clicked at position: " + holder.layoutPosition + " post: $post")
+                R.id.post_content -> parentActivity.navigateToDetails(post)
             }
         }
     }
-    //            val item = view.tag as PostWithUserAddress
-//            if (twoPane) {
-//                val fragment = ItemDetailFragment().apply {
-//                    arguments = Bundle().apply {
-//                        putString(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
-//                    }
-//                }
-//                parentActivity.supportFragmentManager
-//                        .beginTransaction()
-//                        .replace(R.id.item_detail_container, fragment)
-//                        .commit()
-//            } else {
-//                val intent = Intent(view.context, ItemDetailActivity::class.java).apply {
-//                    putExtra(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
-//                }
-//                view.context.startActivity(intent)
-//            }
 }
