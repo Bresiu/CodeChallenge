@@ -52,7 +52,7 @@ class ItemListActivity : BaseActivity() {
 
     private fun onSuccess(resultBundle: List<PostWithUserAddress>) {
         Log.d("BRS", "onSuccess " + resultBundle.size)
-        adapter.addData(resultBundle)
+        adapter.submitList(resultBundle)
     }
 
     private fun onError(error: Throwable?) {

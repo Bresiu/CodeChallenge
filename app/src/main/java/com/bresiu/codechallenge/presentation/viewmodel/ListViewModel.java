@@ -30,8 +30,9 @@ public class ListViewModel extends ViewModel {
 
 	private void initListeners() {
 		subject = BehaviorSubject.create();
-		compositeDisposable.add(
-				subject.subscribeOn(Schedulers.io()).subscribe(repository::deletePostById));
+		compositeDisposable.add(subject.subscribeOn(Schedulers.io())
+				.observeOn(Schedulers.io())
+				.subscribe(repository::deletePostById));
 	}
 
 	private void initLiveData() {
@@ -39,9 +40,13 @@ public class ListViewModel extends ViewModel {
 		mediatorLiveData = new MediatorLiveData<>();
 		mediatorLiveData.addSource(repository.getLiveData(), postWithUserAddresses -> {
 			Log.d("BRS", "onChanged");
-			mediatorLiveData.postValue(Result.successResult(new ResultBundle<>(postWithUserAddresses)));
+			if (postWithUserAddresses.isEmpty()) {
+				Log.d("BRS", "skip empty update");
+			} else {
+				mediatorLiveData.setValue(Result.successResult(new ResultBundle<>(postWithUserAddresses)));
+			}
 		});
-		mediatorLiveData.postValue(Result.loadingResult());
+		mediatorLiveData.setValue(Result.loadingResult());
 	}
 
 	@Override protected void onCleared() {
@@ -54,10 +59,9 @@ public class ListViewModel extends ViewModel {
 	}
 
 	private void fetchData() {
-		compositeDisposable.add(repository.fetchData().subscribe(entitiesCombined -> {
-			Log.d("BRS", "repository.saveData");
-			repository.saveData(entitiesCombined);
-		}, throwable -> mediatorLiveData.postValue(Result.errorResult(throwable))));
+		compositeDisposable.add(repository.fetchData()
+				.subscribe(repository::saveData,
+						throwable -> mediatorLiveData.setValue(Result.errorResult(throwable))));
 	}
 
 	public void deletePostById(long postId) {

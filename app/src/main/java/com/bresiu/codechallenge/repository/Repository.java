@@ -1,5 +1,6 @@
 package com.bresiu.codechallenge.repository;
 
+import android.util.Log;
 import androidx.lifecycle.LiveData;
 import com.bresiu.codechallenge.data.entity.EntitiesCombined;
 import com.bresiu.codechallenge.model.PostWithUserAddress;
@@ -37,6 +38,7 @@ import javax.inject.Singleton;
 	}
 
 	public void saveData(EntitiesCombined entitiesCombined) {
+		Log.d("BRS", "saveData");
 		dbRepository.saveUsers(entitiesCombined.userCombined);
 		dbRepository.savePosts(entitiesCombined.posts);
 		dbRepository.saveAlbums(entitiesCombined.albums);
