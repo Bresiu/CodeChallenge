@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.ListViewItemAdapter
+import com.bresiu.codechallenge.di.Injectable
 import com.bresiu.codechallenge.model.PostWithUserAddress
 import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
 import com.bresiu.codechallenge.presentation.uimodels.Result
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.item_list.*
 import javax.inject.Inject
 
 
-class ItemListActivity : BaseActivity() {
+class ItemListActivity : BaseActivity(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var listViewModel: ListViewModel
@@ -88,7 +89,7 @@ class ItemListActivity : BaseActivity() {
         if (twoPane) {
             val fragment = ItemDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
+                    //putString(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
                 }
             }
             supportFragmentManager
@@ -97,7 +98,7 @@ class ItemListActivity : BaseActivity() {
                     .commit()
         } else {
             val intent = Intent(this, ItemDetailActivity::class.java).apply {
-                putExtra(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
+                //putExtra(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
             }
             startActivity(intent)
         }

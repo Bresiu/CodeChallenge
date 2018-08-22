@@ -1,6 +1,5 @@
 package com.bresiu.codechallenge.presentation.viewmodel
 
-import androidx.collection.ArrayMap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bresiu.codechallenge.di.component.ViewModelSubComponent
@@ -10,11 +9,10 @@ import javax.inject.Singleton
 
 @Singleton
 class ViewModelFactory @Inject constructor(viewModelSubComponent: ViewModelSubComponent) : ViewModelProvider.Factory {
-    private val creators: ArrayMap<Class<*>, Callable<out ViewModel>> = ArrayMap()
-
-    init {
-        creators[ListViewModel::class.java] = Callable<ViewModel> { viewModelSubComponent.itemListViewModel() }
-    }
+    private val creators: HashMap<Class<*>, Callable<out ViewModel>> = hashMapOf(
+            Pair(ListViewModel::class.java, Callable<ViewModel> { viewModelSubComponent.itemListViewModel() }),
+            Pair(DetailViewModel::class.java, Callable<ViewModel> { viewModelSubComponent.detailViewModel() })
+    )
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
