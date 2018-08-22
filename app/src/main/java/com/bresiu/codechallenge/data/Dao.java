@@ -32,6 +32,6 @@ import java.util.List;
 
 	@Query("DELETE FROM posts WHERE id = :postId") void deletePostById(long postId);
 
-	@Query("SELECT posts.title AS postTitle, posts.id AS postId, users.email AS userEmail FROM posts, users WHERE posts.userId = users.id")
+	@Query("SELECT posts.id AS postId, posts.title AS postTitle, posts.body AS postBody, users.email AS userEmail FROM posts, users WHERE posts.userId = users.id")
 	LiveData<List<PostWithUserAddress>> loadAllPostWithUserAddress();
 }

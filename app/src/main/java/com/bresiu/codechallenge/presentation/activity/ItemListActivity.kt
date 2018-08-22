@@ -1,6 +1,5 @@
 package com.bresiu.codechallenge.presentation.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
@@ -87,20 +86,12 @@ class ItemListActivity : BaseActivity(), Injectable {
 
     fun navigateToDetails(item: PostWithUserAddress) {
         if (twoPane) {
-            val fragment = ItemDetailFragment().apply {
-                arguments = Bundle().apply {
-                    //putString(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
-                }
-            }
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
+                    .replace(R.id.item_detail_container, ItemDetailFragment.newInstance(item))
                     .commit()
         } else {
-            val intent = Intent(this, ItemDetailActivity::class.java).apply {
-                //putExtra(ItemDetailFragment.ARG_ITEM_ID, item.postTitle)
-            }
-            startActivity(intent)
+            startActivity(ItemDetailActivity.newStartIntent(this, item))
         }
     }
 
