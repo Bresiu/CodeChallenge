@@ -37,7 +37,7 @@ class ItemListActivity : BaseActivity(), Injectable {
     }
 
     private fun observeUIModel() {
-        listViewModel.liveData.observe(this, Observer { uiModel ->
+        listViewModel.liveData?.observe(this, Observer { uiModel ->
             updateUI(uiModel)
         })
     }
@@ -46,7 +46,7 @@ class ItemListActivity : BaseActivity(), Injectable {
         when (uiModel?.state) {
             Result.LOADING -> onLoading()
             Result.ERROR -> onError(uiModel.error)
-            Result.SUCCESS -> onSuccess(uiModel.bundle.unpack())
+            Result.SUCCESS -> onSuccess(uiModel.bundle!!.unpack())
         }
     }
 

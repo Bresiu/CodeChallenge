@@ -38,18 +38,8 @@ class ItemDetailFragment : BaseFragment() {
         detailViewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailViewModel::class.java)
         Log.d("BRS", "initViewModel")
         detailViewModel.getDetailUpdatesForUser(getItem(arguments).userId).observe(viewLifecycleOwner, Observer { albumWithPhotos ->
-            albumWithPhotos.forEach { d("BRS", albumWithPhotos.toString()) }
+            Log.d("BRS", "update albumWithPhotos size: " + albumWithPhotos.size)
         })
-    }
-
-    fun d(TAG: String, message: String) {
-        val maxLogSize = 2000
-        for (i in 0..message.length / maxLogSize) {
-            val start = i * maxLogSize
-            var end = (i + 1) * maxLogSize
-            end = if (end > message.length) message.length else end
-            android.util.Log.d(TAG, message.substring(start, end))
-        }
     }
 
     companion object {
