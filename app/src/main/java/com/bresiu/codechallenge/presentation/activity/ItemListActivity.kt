@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.ListViewItemAdapter
 import com.bresiu.codechallenge.di.Injectable
-import com.bresiu.codechallenge.model.PostWithUserAddress
+import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
 import com.bresiu.codechallenge.presentation.uimodels.Result
 import com.bresiu.codechallenge.presentation.viewmodel.ListViewModel
@@ -42,7 +42,7 @@ class ItemListActivity : BaseActivity(), Injectable {
         })
     }
 
-    private fun updateUI(uiModel: Result<List<PostWithUserAddress>>?) {
+    private fun updateUI(uiModel: Result<List<PostWithUser>>?) {
         when (uiModel?.state) {
             Result.LOADING -> onLoading()
             Result.ERROR -> onError(uiModel.error)
@@ -50,7 +50,7 @@ class ItemListActivity : BaseActivity(), Injectable {
         }
     }
 
-    private fun onSuccess(resultBundle: List<PostWithUserAddress>) {
+    private fun onSuccess(resultBundle: List<PostWithUser>) {
         Log.d("BRS", "onSuccess " + resultBundle.size)
         adapter.submitList(resultBundle)
     }
@@ -84,7 +84,7 @@ class ItemListActivity : BaseActivity(), Injectable {
         listViewModel = ViewModelProviders.of(this, viewModelFactory).get(ListViewModel::class.java)
     }
 
-    fun navigateToDetails(item: PostWithUserAddress) {
+    fun navigateToDetails(item: PostWithUser) {
         if (twoPane) {
             supportFragmentManager
                     .beginTransaction()

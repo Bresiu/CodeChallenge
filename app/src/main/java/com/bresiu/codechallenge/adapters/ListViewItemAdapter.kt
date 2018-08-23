@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.databinding.PostContentBinding
-import com.bresiu.codechallenge.model.PostWithUserAddress
+import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.activity.ItemListActivity
 
 
-class ListViewItemAdapter(private val parentActivity: ItemListActivity) : ListAdapter<PostWithUserAddress, ListViewItemAdapter.ViewHolder>(ListViewDiffCallback()) {
+class ListViewItemAdapter(private val parentActivity: ItemListActivity) : ListAdapter<PostWithUser, ListViewItemAdapter.ViewHolder>(ListViewDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(DataBindingUtil.inflate(
@@ -29,7 +29,7 @@ class ListViewItemAdapter(private val parentActivity: ItemListActivity) : ListAd
         }
     }
 
-    private fun createOnClickListener(post: PostWithUserAddress): View.OnClickListener {
+    private fun createOnClickListener(post: PostWithUser): View.OnClickListener {
         return View.OnClickListener {
             when (it.id) {
                 R.id.delete -> parentActivity.deletePostById(post.postId)
@@ -39,10 +39,10 @@ class ListViewItemAdapter(private val parentActivity: ItemListActivity) : ListAd
     }
 
     inner class ViewHolder(private val binding: PostContentBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(listener: View.OnClickListener, postWithUserAddress: PostWithUserAddress) {
+        fun bind(listener: View.OnClickListener, postWithUser: PostWithUser) {
             binding.apply {
                 clickListener = listener
-                post = postWithUserAddress
+                post = postWithUser
                 executePendingBindings()
             }
         }

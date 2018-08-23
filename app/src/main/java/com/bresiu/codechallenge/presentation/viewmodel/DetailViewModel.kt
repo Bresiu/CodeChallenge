@@ -1,14 +1,15 @@
 package com.bresiu.codechallenge.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.bresiu.codechallenge.model.AlbumWithPhotos
 import com.bresiu.codechallenge.repository.Repository
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class DetailViewModel @Inject internal constructor(private val repository: Repository) : ViewModel() {
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+class DetailViewModel @Inject internal constructor(
+        private val repository: Repository) : ViewModel() {
 
-    val text: Any?
-        get() = "test"
-
+    fun getDetailUpdatesForUser(userId: Long): LiveData<List<AlbumWithPhotos>> {
+        return repository.makeAlbumLiveData(userId)
+    }
 }

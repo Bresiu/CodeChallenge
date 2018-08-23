@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import com.bresiu.codechallenge.R
-import com.bresiu.codechallenge.model.PostWithUserAddress
+import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
 import kotlinx.android.synthetic.main.activity_item_detail.*
 
@@ -45,15 +45,15 @@ class ItemDetailActivity : BaseActivity() {
 
     companion object {
         private const val ARG_ITEM = "item"
-        fun newStartIntent(context: Context, item: PostWithUserAddress): Intent {
+        fun newStartIntent(context: Context, item: PostWithUser): Intent {
             return Intent(context, ItemDetailActivity::class.java).apply {
                 putExtra(ARG_ITEM, item)
             }
         }
 
-        fun getItem(arguments: Bundle): PostWithUserAddress {
+        fun getItem(arguments: Bundle): PostWithUser {
             return arguments.getParcelable(ARG_ITEM)
-                    ?: throw IllegalStateException("PostWithUserAddress argument is missing")
+                    ?: throw IllegalStateException("PostWithUser argument is missing")
         }
     }
 }

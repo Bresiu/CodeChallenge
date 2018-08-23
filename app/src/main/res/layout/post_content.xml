@@ -10,7 +10,7 @@
 				type="android.view.View.OnClickListener"/>
 		<variable
 				name="post"
-				type="com.bresiu.codechallenge.model.PostWithUserAddress"/>
+				type="com.bresiu.codechallenge.model.PostWithUser"/>
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout

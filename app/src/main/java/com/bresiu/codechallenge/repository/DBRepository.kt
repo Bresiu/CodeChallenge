@@ -6,7 +6,8 @@ import com.bresiu.codechallenge.data.Dao
 import com.bresiu.codechallenge.data.entity.Album
 import com.bresiu.codechallenge.data.entity.Photo
 import com.bresiu.codechallenge.data.entity.Post
-import com.bresiu.codechallenge.model.PostWithUserAddress
+import com.bresiu.codechallenge.model.AlbumWithPhotos
+import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.model.UserCombined
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,11 +35,15 @@ internal class DBRepository @Inject constructor(private val dao: Dao) {
         dao.insertPhotos(photos)
     }
 
-    fun fetchPostsWithUserAddress(): LiveData<List<PostWithUserAddress>> {
-        return dao.loadAllPostWithUserAddress()
-    }
-
     fun deletePostById(postId: Long) {
         dao.deletePostById(postId)
+    }
+
+    fun fetchPostsWithUser(): LiveData<List<PostWithUser>> {
+        return dao.loadAllPostWithUser()
+    }
+
+    fun fetchAlbumsForUser(userId: Long): LiveData<List<AlbumWithPhotos>> {
+        return dao.getAlbumsForUser(userId)
     }
 }

@@ -4,7 +4,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
-import com.bresiu.codechallenge.model.PostWithUserAddress;
+import com.bresiu.codechallenge.model.PostWithUser;
 import com.bresiu.codechallenge.presentation.uimodels.Result;
 import com.bresiu.codechallenge.presentation.uimodels.ResultBundle;
 import com.bresiu.codechallenge.repository.Repository;
@@ -18,7 +18,7 @@ public class ListViewModel extends ViewModel {
 	private final Repository repository;
 	private final CompositeDisposable compositeDisposable;
 	private BehaviorSubject<Long> subject;
-	private MediatorLiveData<Result<List<PostWithUserAddress>>> mediatorLiveData;
+	private MediatorLiveData<Result<List<PostWithUser>>> mediatorLiveData;
 
 	@Inject ListViewModel(Repository repository) {
 		this.repository = repository;
@@ -38,7 +38,7 @@ public class ListViewModel extends ViewModel {
 	private void initLiveData() {
 		Log.d("BRS", "initLiveData");
 		mediatorLiveData = new MediatorLiveData<>();
-		mediatorLiveData.addSource(repository.getLiveData(), postWithUserAddresses -> {
+		mediatorLiveData.addSource(repository.getPostsUpdates(), postWithUserAddresses -> {
 			Log.d("BRS", "onChanged");
 			if (postWithUserAddresses.isEmpty()) {
 				Log.d("BRS", "skip empty update");
@@ -54,7 +54,7 @@ public class ListViewModel extends ViewModel {
 		super.onCleared();
 	}
 
-	public LiveData<Result<List<PostWithUserAddress>>> getLiveData() {
+	public LiveData<Result<List<PostWithUser>>> getLiveData() {
 		return mediatorLiveData;
 	}
 
