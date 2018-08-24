@@ -1,6 +1,7 @@
 package com.bresiu.codechallenge.repository
 
 import androidx.lifecycle.LiveData
+import com.bresiu.codechallenge.data.entity.AlbumWithPhotos
 import com.bresiu.codechallenge.data.entity.EntitiesCombined
 import com.bresiu.codechallenge.model.*
 import com.bresiu.codechallenge.repository.mappers.*

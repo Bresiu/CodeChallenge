@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.bresiu.codechallenge.data.entity.*
-import com.bresiu.codechallenge.model.AlbumWithPhotos
+import com.bresiu.codechallenge.data.entity.AlbumWithPhotos
 import com.bresiu.codechallenge.model.PostWithUser
 
 @WorkerThread

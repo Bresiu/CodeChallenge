@@ -6,7 +6,7 @@ import com.bresiu.codechallenge.data.Dao
 import com.bresiu.codechallenge.data.entity.Album
 import com.bresiu.codechallenge.data.entity.Photo
 import com.bresiu.codechallenge.data.entity.Post
-import com.bresiu.codechallenge.model.AlbumWithPhotos
+import com.bresiu.codechallenge.data.entity.AlbumWithPhotos
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.model.UserCombined
 import javax.inject.Inject
