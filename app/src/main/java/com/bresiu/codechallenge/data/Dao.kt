@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.bresiu.codechallenge.data.entity.*
 import com.bresiu.codechallenge.model.PostWithUser
+import io.reactivex.Flowable
 
 @WorkerThread
 @androidx.room.Dao
@@ -41,5 +42,5 @@ interface Dao {
 
   @Transaction
   @Query("SELECT albums.id AS id, albums.title AS title FROM albums WHERE albums.userId = :userId")
-  fun getAlbumsForUser(userId: Long): LiveData<List<AlbumWithPhotos>>
+  fun getAlbumsForUser(userId: Long): Flowable<List<AlbumWithPhotos>>
 }

@@ -9,6 +9,7 @@ import com.bresiu.codechallenge.data.entity.Photo
 import com.bresiu.codechallenge.data.entity.Post
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.model.UserCombined
+import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -43,7 +44,7 @@ internal class DBRepository @Inject constructor(private val dao: Dao) {
     return dao.loadAllPostWithUser()
   }
 
-  fun fetchAlbumsForUser(userId: Long): LiveData<List<AlbumWithPhotos>> {
+  fun fetchAlbumsForUser(userId: Long): Flowable<List<AlbumWithPhotos>> {
     return dao.getAlbumsForUser(userId)
   }
 }

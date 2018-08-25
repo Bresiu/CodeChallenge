@@ -1,7 +1,7 @@
 package com.bresiu.codechallenge.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.LiveDataReactiveStreams
 import com.bresiu.codechallenge.data.entity.EntitiesCombined
 import com.bresiu.codechallenge.model.*
 import com.bresiu.codechallenge.repository.mappers.*
@@ -48,8 +48,13 @@ class Repository @Inject internal constructor(private val dbRepository: DBReposi
   }
 
   fun makeAlbumLiveData(userId: Long): LiveData<List<AlbumListItem>> {
-    return Transformations.map(dbRepository.fetchAlbumsForUser(userId)) {
-      Mapper.unfoldList(it, AlbumWithPhotosToAlbumListItemMapper())
-    }
+    return LiveDataReactiveStreams.fromPublisher(
+        dbRepository.fetchAlbumsForUser(userId)
+            .filter {
+              it.isNotEmpty()
+            }.map {
+              Mapper.unfoldList(it, AlbumWithPhotosToAlbumListItemMapper())
+            }
+    )
   }
 }

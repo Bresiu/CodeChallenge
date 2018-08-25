@@ -15,10 +15,10 @@
 			style="?android:attr/textAppearanceLarge"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:padding="16dp"
 			android:textIsSelectable="true"
 			tools:context=".presentation.fragment.ItemDetailFragment">
 		<TextView
+				android:padding="16dp"
 				android:id="@+id/post_detail_title"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
@@ -30,6 +30,7 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				tools:text="Post title"/>
 		<TextView
+				android:padding="16dp"
 				android:id="@+id/post_detail_content"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"

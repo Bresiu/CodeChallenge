@@ -12,25 +12,27 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.AlbumListAdapter
-import com.bresiu.codechallenge.databinding.ItemDetailBinding
+import com.bresiu.codechallenge.databinding.PostDetailBinding
 import com.bresiu.codechallenge.model.AlbumListItem
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.viewmodel.DetailViewModel
 import com.bresiu.codechallenge.presentation.views.HeaderItemDecoration
-import kotlinx.android.synthetic.main.item_detail.*
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.post_detail.*
 import javax.inject.Inject
+
 
 class ItemDetailFragment : BaseFragment() {
   @Inject
   lateinit var viewModelFactory: ViewModelProvider.Factory
   private lateinit var detailViewModel: DetailViewModel
-  private lateinit var adapter: AlbumListAdapter
+  private lateinit var albumListAdapter: AlbumListAdapter
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
     Log.d("BRS", "onCreateView")
     return DataBindingUtil
-        .inflate<ItemDetailBinding>(inflater, R.layout.item_detail, container, false)
+        .inflate<PostDetailBinding>(inflater, R.layout.post_detail, container, false)
         .apply { post = getItem(arguments) }
         .root
   }
@@ -52,13 +54,15 @@ class ItemDetailFragment : BaseFragment() {
   }
 
   private fun updateUI(albumListItems: List<AlbumListItem>) {
-    adapter.submitList(albumListItems)
+    albumListAdapter.submitList(albumListItems)
   }
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {
-    adapter = AlbumListAdapter()
-    recyclerView.adapter = adapter
-    recyclerView.addItemDecoration(HeaderItemDecoration(recyclerView, adapter))
+    albumListAdapter = AlbumListAdapter(Glide.with(this))
+    with(recyclerView) {
+      adapter = albumListAdapter
+      addItemDecoration(HeaderItemDecoration(recyclerView, albumListAdapter))
+    }
   }
 
   companion object {
