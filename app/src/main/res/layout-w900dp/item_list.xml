@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:baselineAligned="false"
 		android:divider="?android:attr/dividerHorizontal"
-		android:orientation="horizontal"
 		android:showDividers="middle"
-		android:padding="@dimen/list_padding"
-		tools:context=".presentation.activity.ItemListActivity">
+		tools:context=".presentation.activity.ItemListActivity" android:layout_width="match_parent">
 
 	<androidx.recyclerview.widget.RecyclerView
-			xmlns:android="http://schemas.android.com/apk/res/android"
-			xmlns:app="http://schemas.android.com/apk/res-auto"
-			xmlns:tools="http://schemas.android.com/tools"
 			android:id="@+id/item_list"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:paddingEnd="@dimen/list_padding"
+			android:layout_height="0dp"
 			android:paddingStart="@dimen/list_padding"
+			android:paddingEnd="@dimen/list_padding"
+			android:clipToPadding="false"
+			android:clipChildren="true" android:layout_width="0dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/item_detail_container"
+			app:layout_constraintHorizontal_weight="1"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 			tools:context=".presentation.activity.ItemListActivity"
-			tools:listitem="@layout/post_content"
-			android:clipToPadding="false"
-			android:clipChildren="true"/>
+			tools:listitem="@layout/post_content"/>
 
 	<FrameLayout
 			android:id="@+id/item_detail_container"
 			android:layout_width="0dp"
-			android:layout_height="match_parent"
-			android:layout_weight="3"/>
+			android:layout_height="0dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/item_list"
+			app:layout_constraintHorizontal_weight="2"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

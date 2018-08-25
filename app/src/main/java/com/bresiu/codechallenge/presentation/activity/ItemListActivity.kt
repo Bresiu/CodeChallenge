@@ -2,6 +2,7 @@ package com.bresiu.codechallenge.presentation.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -51,12 +52,11 @@ class ItemListActivity : BaseActivity(), Injectable {
   }
 
   private fun onSuccess(resultBundle: List<PostWithUser>) {
-    Log.d("BRS", "onSuccess " + resultBundle.size)
     adapterPost.submitList(resultBundle)
   }
 
   private fun onError(error: Throwable?) {
-    Log.d("BRS", "onError " + error?.message)
+    showToast(error?.message ?: getString(R.string.unknown_error))
   }
 
   private fun onLoading() {
@@ -97,5 +97,9 @@ class ItemListActivity : BaseActivity(), Injectable {
 
   fun deletePostById(postId: Long) {
     listViewModel.deletePostById(postId)
+  }
+
+  private fun showToast(message: String?) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
   }
 }

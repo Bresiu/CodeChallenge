@@ -15,10 +15,11 @@
 			style="?android:attr/textAppearanceLarge"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:paddingStart="@dimen/list_padding"
+			android:paddingEnd="@dimen/list_padding"
 			android:textIsSelectable="true"
 			tools:context=".presentation.fragment.ItemDetailFragment">
 		<TextView
-				android:padding="16dp"
 				android:id="@+id/post_detail_title"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
@@ -30,12 +31,12 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				tools:text="Post title"/>
 		<TextView
-				android:padding="16dp"
 				android:id="@+id/post_detail_content"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:textAppearance="?attr/textAppearanceSearchResultSubtitle"
 				android:text="@{post.postBody}"
+				android:layout_marginBottom="8dp"
 				app:layout_constraintTop_toBottomOf="@+id/post_detail_title"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"

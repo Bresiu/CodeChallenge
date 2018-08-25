@@ -3,4 +3,5 @@
 	<string name="title_item_detail">Item Detail</string>
 	<string name="delete_post">delete post</string>
 	<string name="photo_description">photo</string>
+	<string name="unknown_error">unknown error</string>
 </resources>
