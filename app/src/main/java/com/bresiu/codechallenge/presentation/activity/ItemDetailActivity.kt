@@ -18,42 +18,42 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
  */
 class ItemDetailActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_detail)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        Log.d("BRS", "onCreate detail activity")
-        if (savedInstanceState == null) {
-            intent.extras?.let {
-                supportFragmentManager.beginTransaction()
-                        .add(R.id.item_detail_container, ItemDetailFragment.newInstance(getItem(intent.extras!!)))
-                        .commit()
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_item_detail)
+    setSupportActionBar(toolbar)
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    Log.d("BRS", "onCreate detail activity")
+    if (savedInstanceState == null) {
+      intent.extras?.let {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.item_detail_container, ItemDetailFragment.newInstance(getItem(intent.extras!!)))
+            .commit()
 
-            }
+      }
+    }
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem) =
+      when (item.itemId) {
+        android.R.id.home -> {
+          navigateUpTo(Intent(this, ItemListActivity::class.java))
+          true
         }
+        else -> super.onOptionsItemSelected(item)
+      }
+
+  companion object {
+    private const val ARG_ITEM = "item"
+    fun newStartIntent(context: Context, item: PostWithUser): Intent {
+      return Intent(context, ItemDetailActivity::class.java).apply {
+        putExtra(ARG_ITEM, item)
+      }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) =
-            when (item.itemId) {
-                android.R.id.home -> {
-                    navigateUpTo(Intent(this, ItemListActivity::class.java))
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
-            }
-
-    companion object {
-        private const val ARG_ITEM = "item"
-        fun newStartIntent(context: Context, item: PostWithUser): Intent {
-            return Intent(context, ItemDetailActivity::class.java).apply {
-                putExtra(ARG_ITEM, item)
-            }
-        }
-
-        fun getItem(arguments: Bundle): PostWithUser {
-            return arguments.getParcelable(ARG_ITEM)
-                    ?: throw IllegalStateException("PostWithUser argument is missing")
-        }
+    fun getItem(arguments: Bundle): PostWithUser {
+      return arguments.getParcelable(ARG_ITEM)
+          ?: throw IllegalStateException("PostWithUser argument is missing")
     }
+  }
 }

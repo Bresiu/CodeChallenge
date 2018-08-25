@@ -6,6 +6,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ItemListModule {
-    @ContributesAndroidInjector
-    internal abstract fun contributeItemListActivity(): ItemListActivity
+  @ContributesAndroidInjector
+  internal abstract fun contributeItemListActivity(): ItemListActivity
 }

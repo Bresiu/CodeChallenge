@@ -6,11 +6,11 @@ import dagger.Subcomponent
 
 @Subcomponent
 interface ViewModelSubComponent {
-    fun itemListViewModel(): ListViewModel
-    fun detailViewModel(): DetailViewModel
+  fun itemListViewModel(): ListViewModel
+  fun detailViewModel(): DetailViewModel
 
-    @Subcomponent.Builder
-    interface Builder {
-        fun build(): ViewModelSubComponent
-    }
+  @Subcomponent.Builder
+  interface Builder {
+    fun build(): ViewModelSubComponent
+  }
 }

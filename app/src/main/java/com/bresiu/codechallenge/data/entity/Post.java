@@ -5,11 +5,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(
-		indices = {@Index("userId")},
-		tableName = "posts",
-		foreignKeys = @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId", onDelete = ForeignKey.CASCADE)
-)
+@Entity(indices = {
+		@Index("userId")
+}, tableName = "posts", foreignKeys = @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId", onDelete = ForeignKey.CASCADE))
 public class Post {
 	@PrimaryKey public long id;
 	public long userId;

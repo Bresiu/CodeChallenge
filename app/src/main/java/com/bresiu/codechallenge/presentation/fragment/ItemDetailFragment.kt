@@ -9,14 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.AlbumListAdapter
 import com.bresiu.codechallenge.databinding.ItemDetailBinding
+import com.bresiu.codechallenge.model.AlbumListItem
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.viewmodel.DetailViewModel
 import com.bresiu.codechallenge.presentation.views.HeaderItemDecoration
+import kotlinx.android.synthetic.main.item_detail.*
 import javax.inject.Inject
 
 class ItemDetailFragment : BaseFragment() {
@@ -26,7 +27,7 @@ class ItemDetailFragment : BaseFragment() {
   private lateinit var adapter: AlbumListAdapter
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
+                            savedInstanceState: Bundle?): View? {
     Log.d("BRS", "onCreateView")
     return DataBindingUtil
         .inflate<ItemDetailBinding>(inflater, R.layout.item_detail, container, false)
@@ -37,15 +38,21 @@ class ItemDetailFragment : BaseFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
     initViewModel()
+    setupRecyclerView(post_detail_album)
   }
 
   private fun initViewModel() {
     detailViewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailViewModel::class.java)
     Log.d("BRS", "initViewModel")
     detailViewModel.getDetailUpdatesForUser(getItem(arguments).userId).observe(viewLifecycleOwner,
-        Observer { albumWithPhotos ->
-          Log.d("BRS", "update albumWithPhotos size: " + albumWithPhotos.size)
+        Observer { albumListItems ->
+          Log.d("BRS", "update albumListItem size: " + albumListItems.size)
+          updateUI(albumListItems)
         })
+  }
+
+  private fun updateUI(albumListItems: List<AlbumListItem>) {
+    adapter.submitList(albumListItems)
   }
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {

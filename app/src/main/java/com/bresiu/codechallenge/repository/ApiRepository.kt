@@ -12,39 +12,39 @@ import javax.inject.Singleton
 
 @Singleton
 class ApiRepository @Inject internal constructor(retrofit: Retrofit) {
-    private val codeChallengeService: CodeChallengeService
+  private val codeChallengeService: CodeChallengeService
 
-    internal val users: Observable<List<User>>
-        get() = codeChallengeService.users
+  internal val users: Observable<List<User>>
+    get() = codeChallengeService.users
 
-    internal val albums: Observable<List<Album>>
-        get() = codeChallengeService.albums
+  internal val albums: Observable<List<Album>>
+    get() = codeChallengeService.albums
 
-    internal val photos: Observable<List<Photo>>
-        get() = codeChallengeService.photos
+  internal val photos: Observable<List<Photo>>
+    get() = codeChallengeService.photos
 
-    internal val posts: Observable<List<Post>>
-        get() = codeChallengeService.posts
+  internal val posts: Observable<List<Post>>
+    get() = codeChallengeService.posts
 
-    init {
-        codeChallengeService = retrofit.create(CodeChallengeService::class.java)
-    }
+  init {
+    codeChallengeService = retrofit.create(CodeChallengeService::class.java)
+  }
 
-    interface CodeChallengeService {
-        @get:GET("users")
-        val users: Observable<List<User>>
+  interface CodeChallengeService {
+    @get:GET("users")
+    val users: Observable<List<User>>
 
-        @get:GET("albums")
-        val albums: Observable<List<Album>>
+    @get:GET("albums")
+    val albums: Observable<List<Album>>
 
-        @get:GET("photos")
-        val photos: Observable<List<Photo>>
+    @get:GET("photos")
+    val photos: Observable<List<Photo>>
 
-        @get:GET("posts")
-        val posts: Observable<List<Post>>
-    }
+    @get:GET("posts")
+    val posts: Observable<List<Post>>
+  }
 
-    companion object {
-        const val API_ENDPOINT = "https://jsonplaceholder.typicode.com/"
-    }
+  companion object {
+    const val API_ENDPOINT = "https://jsonplaceholder.typicode.com/"
+  }
 }

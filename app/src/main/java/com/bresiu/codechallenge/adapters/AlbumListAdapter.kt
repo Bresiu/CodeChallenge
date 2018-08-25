@@ -14,7 +14,8 @@ import com.bresiu.codechallenge.presentation.views.HeaderItemDecoration.StickyHe
 class AlbumListAdapter : ListAdapter<AlbumListItem, ViewHolder>(
     AlbumListDiffCallback()), StickyHeaderInterface {
   override fun bindHeaderData(header: TextView, headerPosition: Int) {
-    header.text = getItem(headerPosition).toString()
+    val txt: String = getItem(headerPosition).toString()
+    header.text = txt
   }
 
   override fun getHeaderLayout(headerPosition: Int): Int {
@@ -22,16 +23,11 @@ class AlbumListAdapter : ListAdapter<AlbumListItem, ViewHolder>(
   }
 
   override fun getHeaderPositionForItem(itemPosition: Int): Int {
-    var headerPosition = 0
-    var position = itemPosition
-    do {
-      if (this.isHeader(itemPosition)) {
-        headerPosition = itemPosition
-        break
-      }
-      position -= 1
-    } while (position >= 0)
-    return headerPosition
+    var i = itemPosition
+    while (true) {
+      if (isHeader(i)) return i
+      i--
+    }
   }
 
   override fun isHeader(itemPosition: Int): Boolean {
@@ -40,33 +36,22 @@ class AlbumListAdapter : ListAdapter<AlbumListItem, ViewHolder>(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     return ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.album_container, parent, false))
-//    return ViewHolder(DataBindingUtil.inflate(
-//        LayoutInflater.from(parent.context),
-//        R.layout.album_container, parent, false)
-//    )
+        LayoutInflater.from(parent.context).inflate(R.layout.header_view, parent, false)
+    )
   }
-
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    val item = getItem(position)
+    holder.apply {
+      bind(item)
+      itemView.tag = item
+    }
   }
 
-//  private fun createOnClickListener(post: AlbumListItem): View.OnClickListener {
-//    return View.OnClickListener {
-//      when (it.id) {
-////        R.id.delete -> parentActivity.deletePostById(post.postId)
-////        R.id.post_content -> parentActivity.navigateToDetails(post)
-//      }
-//    }
-//  }
-
-  inner class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-//    fun bind(listener: View.OnClickListener, postWithUser: PostWithUser) {
-//      binding.apply {
-//        clickListener = listener
-//        post = postWithUser
-//        executePendingBindings()
-//      }
-//    }
+  inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private val textView = view as TextView
+    fun bind(item: AlbumListItem) {
+      textView.text = item.toString()
+    }
   }
 }

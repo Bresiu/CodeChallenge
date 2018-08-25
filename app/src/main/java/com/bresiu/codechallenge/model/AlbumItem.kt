@@ -7,5 +7,6 @@ data class AlbumItem(
   override fun isHeader(): Boolean {
     return true
   }
+
   override fun toString() = title
 }

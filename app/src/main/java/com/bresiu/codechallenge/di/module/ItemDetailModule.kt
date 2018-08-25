@@ -7,8 +7,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ItemDetailModule {
-    @ContributesAndroidInjector
-    internal abstract fun contributeItemDetailFragment(): ItemDetailFragment
-    @ContributesAndroidInjector
-    internal abstract fun contributeItemDetailActivity(): ItemDetailActivity
+  @ContributesAndroidInjector
+  internal abstract fun contributeItemDetailFragment(): ItemDetailFragment
+
+  @ContributesAndroidInjector
+  internal abstract fun contributeItemDetailActivity(): ItemDetailActivity
 }
