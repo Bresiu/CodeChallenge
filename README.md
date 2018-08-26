@@ -12,6 +12,7 @@
 - Implement sticky headers for album titles
 - Use lazy loading with cache for images
 
+State of art
 * Use Architecture components
 * Use Glide
 * Use RxJava
