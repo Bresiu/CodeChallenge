@@ -5,7 +5,6 @@
   * Users: http://jsonplaceholder.typicode.com/users/
   * Albums: http://jsonplaceholder.typicode.com/albums/
   * Photos: http://jsonplaceholder.typicode.com/photos/
-
 - Persist the data in DataBase with relationships
 - Show data in Master/Detail view
   * Master view: post with title and user address. Post can be deleted.
