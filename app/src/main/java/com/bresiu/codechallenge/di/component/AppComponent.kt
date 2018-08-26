@@ -11,7 +11,12 @@ import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AndroidInjectionModule::class), (AppModule::class), (ItemListModule::class), (ItemDetailModule::class)])
+@Component(
+    modules = [(AndroidInjectionModule::class),
+      (AppModule::class),
+      (ItemListModule::class),
+      (ItemDetailModule::class)]
+)
 interface AppComponent {
   fun inject(codeChallengeApp: CodeChallengeApp)
 

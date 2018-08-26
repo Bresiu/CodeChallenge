@@ -36,8 +36,7 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
   private fun initLiveData() {
     mediatorLiveData = MediatorLiveData()
     mediatorLiveData!!.addSource(repository.postsUpdates) { postWithUserAddresses ->
-      if (postWithUserAddresses.isEmpty()) {
-      } else {
+      if (postWithUserAddresses.isNotEmpty()) {
         mediatorLiveData!!.postValue(Result.successResult(ResultBundle(postWithUserAddresses)))
       }
     }
@@ -51,7 +50,11 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
 
   private fun fetchData() {
     compositeDisposable.add(repository.fetchData()
-        .subscribe({ repository.saveData(it) }, { mediatorLiveData!!.postValue(Result.errorResult(it)) }))
+        .subscribe({
+          repository.saveData(it)
+        }, {
+          mediatorLiveData!!.postValue(Result.errorResult(it))
+        }))
   }
 
   fun deletePostById(postId: Long) {
