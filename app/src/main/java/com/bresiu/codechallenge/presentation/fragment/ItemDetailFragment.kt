@@ -1,7 +1,6 @@
 package com.bresiu.codechallenge.presentation.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,6 @@ class ItemDetailFragment : BaseFragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
-    Log.d("BRS", "onCreateView")
     return DataBindingUtil
         .inflate<PostDetailBinding>(inflater, R.layout.post_detail, container, false)
         .apply { post = getItem(arguments) }
@@ -45,10 +43,8 @@ class ItemDetailFragment : BaseFragment() {
 
   private fun initViewModel() {
     detailViewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailViewModel::class.java)
-    Log.d("BRS", "initViewModel")
     detailViewModel.getDetailUpdatesForUser(getItem(arguments).userId).observe(viewLifecycleOwner,
         Observer { albumListItems ->
-          Log.d("BRS", "update albumListItem size: " + albumListItems.size)
           updateUI(albumListItems)
         })
   }

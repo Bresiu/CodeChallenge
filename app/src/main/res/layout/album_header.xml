@@ -2,6 +2,6 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/album_header"
 		android:textAppearance="?attr/textAppearanceSearchResultTitle"
-		android:background="#FAFAFA"
+		android:background="@color/default_background"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"/>

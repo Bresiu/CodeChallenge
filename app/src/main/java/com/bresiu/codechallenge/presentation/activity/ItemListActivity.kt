@@ -1,7 +1,7 @@
 package com.bresiu.codechallenge.presentation.activity
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +17,7 @@ import com.bresiu.codechallenge.presentation.uimodels.Result
 import com.bresiu.codechallenge.presentation.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 
@@ -52,15 +53,25 @@ class ItemListActivity : BaseActivity(), Injectable {
   }
 
   private fun onSuccess(resultBundle: List<PostWithUser>) {
+    progress_circular.visibility = View.GONE
     adapterPost.submitList(resultBundle)
+    if (twoPane) {
+      navigateToDetails(resultBundle.first())
+    }
   }
 
   private fun onError(error: Throwable?) {
-    showToast(error?.message ?: getString(R.string.unknown_error))
+    progress_circular.visibility = View.GONE
+    val errorMessage = if (error is UnknownHostException) {
+      getString(R.string.internet_connection_problem)
+    } else {
+      error?.localizedMessage ?: getString(R.string.unknown_error)
+    }
+    showToast(errorMessage)
   }
 
   private fun onLoading() {
-    Log.d("BRS", "onLoading")
+    progress_circular.visibility = View.VISIBLE
   }
 
   private fun setupContainer() {

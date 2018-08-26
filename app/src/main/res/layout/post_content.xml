@@ -47,8 +47,8 @@
 		<ImageView
 				android:id="@+id/delete"
 				android:layout_width="0dp"
-				android:layout_height="20dp"
-				android:layout_marginStart="8dp"
+				android:layout_height="@dimen/delete_icon_size"
+				android:layout_marginStart="@dimen/delete_icon_margin"
 				android:tint="@android:color/tab_indicator_text"
 				android:onClick="@{clickListener}"
 				app:srcCompat="@drawable/close_circle"

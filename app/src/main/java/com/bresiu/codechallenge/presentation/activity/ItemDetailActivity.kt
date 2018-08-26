@@ -3,7 +3,6 @@ package com.bresiu.codechallenge.presentation.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.model.PostWithUser
@@ -23,7 +22,6 @@ class ItemDetailActivity : BaseActivity() {
     setContentView(R.layout.activity_item_detail)
     setSupportActionBar(toolbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    Log.d("BRS", "onCreate detail activity")
     if (savedInstanceState == null) {
       intent.extras?.let {
         supportFragmentManager.beginTransaction()
