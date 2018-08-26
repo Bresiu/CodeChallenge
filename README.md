@@ -23,5 +23,4 @@ TODO:
 - Add data binding for Detail view
 - Implement paging using `androidx.paging` - The problem now is that number of items fetched from db must be equal to number of items receiced by adapter/`Paging consumer`. Due to flatteing Albums (`Mapper.unfoldList(it, AlbumWithPhotosToAlbumListItemMapper())` into [Album, Photo, Photo, ...] needed for sticky headers adapter, it changes. Flattening list should be considered on db query level or custom `DataSource` class needs to be implemented
 - Implement `@GlideModule` - currently `RequestOptions` are just shared between calls
-- Entity classes could be migrated to `.kt`
 - Full resolution photo can be displayed after user clicks on thumbnail
