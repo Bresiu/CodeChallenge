@@ -1,7 +1,9 @@
 package com.bresiu.codechallenge.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.bresiu.codechallenge.data.entity.AlbumWithPhotos
 import com.bresiu.codechallenge.data.entity.EntitiesCombined
 import com.bresiu.codechallenge.model.*
 import com.bresiu.codechallenge.repository.mappers.*
@@ -47,14 +49,16 @@ class Repository @Inject internal constructor(private val dbRepository: DBReposi
     dbRepository.savePhotos(entitiesCombined.photos)
   }
 
-  fun makeAlbumLiveData(userId: Long): LiveData<List<AlbumListItem>> {
-    return LiveDataReactiveStreams.fromPublisher(
-        dbRepository.fetchAlbumsForUser(userId)
-            .filter {
-              it.isNotEmpty()
-            }.map {
-              Mapper.unfoldList(it, AlbumWithPhotosToAlbumListItemMapper())
-            }
-    )
+  fun makeAlbumLiveData(userId: Long): LiveData<PagedList<AlbumWithPhotos>> {
+    return LivePagedListBuilder(dbRepository.fetchAlbumsForUser(userId), 20).build()
+//    return LiveDataReactiveStreams.fromPublisher(
+//
+//        dbRepository.fetchAlbumsForUser(userId)
+//            .filter {
+//              it.isNotEmpty()
+//            }.map {
+//              Mapper.unfoldList(it, AlbumWithPhotosToAlbumListItemMapper())
+//            }
+//    )
   }
 }

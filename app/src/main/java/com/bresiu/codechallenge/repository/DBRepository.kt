@@ -2,6 +2,7 @@ package com.bresiu.codechallenge.repository
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import com.bresiu.codechallenge.data.Dao
 import com.bresiu.codechallenge.data.entity.Album
 import com.bresiu.codechallenge.data.entity.AlbumWithPhotos
@@ -9,7 +10,6 @@ import com.bresiu.codechallenge.data.entity.Photo
 import com.bresiu.codechallenge.data.entity.Post
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.model.UserCombined
-import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,7 +44,7 @@ internal class DBRepository @Inject constructor(private val dao: Dao) {
     return dao.loadAllPostWithUser()
   }
 
-  fun fetchAlbumsForUser(userId: Long): Flowable<List<AlbumWithPhotos>> {
+  fun fetchAlbumsForUser(userId: Long): DataSource.Factory<Int, AlbumWithPhotos> {
     return dao.getAlbumsForUser(userId)
   }
 }

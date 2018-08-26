@@ -1,6 +1,7 @@
 package com.bresiu.codechallenge.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bresiu.codechallenge.R
 import com.bresiu.codechallenge.adapters.AlbumListAdapter
+import com.bresiu.codechallenge.data.entity.AlbumWithPhotos
 import com.bresiu.codechallenge.databinding.PostDetailBinding
-import com.bresiu.codechallenge.model.AlbumListItem
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.viewmodel.DetailViewModel
 import com.bresiu.codechallenge.presentation.views.HeaderItemDecoration
@@ -49,8 +51,9 @@ class ItemDetailFragment : BaseFragment() {
         })
   }
 
-  private fun updateUI(albumListItems: List<AlbumListItem>) {
-    albumListAdapter.submitList(albumListItems)
+  private fun updateUI(albumWithPhotos: PagedList<AlbumWithPhotos>) {
+    Log.d("BRS", "update ui size: " + albumWithPhotos.size)
+    albumListAdapter.submitList(albumWithPhotos)
   }
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {

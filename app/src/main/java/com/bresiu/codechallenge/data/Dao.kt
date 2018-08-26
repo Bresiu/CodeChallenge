@@ -2,13 +2,13 @@ package com.bresiu.codechallenge.data
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.bresiu.codechallenge.data.entity.*
 import com.bresiu.codechallenge.model.PostWithUser
-import io.reactivex.Flowable
 
 @WorkerThread
 @androidx.room.Dao
@@ -42,5 +42,5 @@ interface Dao {
 
   @Transaction
   @Query("SELECT albums.id AS id, albums.title AS title FROM albums WHERE albums.userId = :userId")
-  fun getAlbumsForUser(userId: Long): Flowable<List<AlbumWithPhotos>>
+  fun getAlbumsForUser(userId: Long): DataSource.Factory<Int, AlbumWithPhotos>
 }
