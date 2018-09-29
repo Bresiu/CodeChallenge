@@ -5,4 +5,6 @@
 	<string name="photo_description">photo</string>
 	<string name="unknown_error">unknown error</string>
 	<string name="internet_connection_problem">Problem with internet connection</string>
+	<string name="action_search">search</string>
+	<string name="search_hint">search posts...</string>
 </resources>

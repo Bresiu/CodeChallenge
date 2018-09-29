@@ -1,5 +1,6 @@
 package com.bresiu.codechallenge.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
@@ -36,9 +37,7 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
   private fun initLiveData() {
     mediatorLiveData = MediatorLiveData()
     mediatorLiveData!!.addSource(repository.postsUpdates) { postWithUserAddresses ->
-      if (postWithUserAddresses.isNotEmpty()) {
-        mediatorLiveData!!.postValue(Result.successResult(ResultBundle(postWithUserAddresses)))
-      }
+      postDataIfNotEmpty(postWithUserAddresses)
     }
     mediatorLiveData!!.value = Result.loadingResult()
   }
@@ -46,6 +45,22 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
   override fun onCleared() {
     compositeDisposable.dispose()
     super.onCleared()
+  }
+
+  fun searchForData(phrase: String) {
+    compositeDisposable.add(repository.searchDataForPhrase("%$phrase%")
+        .subscribe({
+          Log.d("BRS","searched size: " + it.size)
+          postDataIfNotEmpty(it)
+        }, {
+          mediatorLiveData!!.postValue(Result.errorResult(it))
+        }))
+  }
+
+  private fun postDataIfNotEmpty(data: List<PostWithUser>) {
+    if (data.isNotEmpty()) {
+      mediatorLiveData!!.postValue(Result.successResult(ResultBundle(data)))
+    }
   }
 
   private fun fetchData() {

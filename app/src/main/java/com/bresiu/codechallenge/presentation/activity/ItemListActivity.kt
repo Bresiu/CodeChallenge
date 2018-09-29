@@ -1,8 +1,11 @@
 package com.bresiu.codechallenge.presentation.activity
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -36,6 +39,27 @@ class ItemListActivity : BaseActivity(), Injectable {
     setupRecyclerView(item_list)
     initViewModel()
     observeUIModel()
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.item_list_menu, menu)
+    val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+    searchView.apply {
+      queryHint = context.getString(R.string.search_hint)
+      setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String): Boolean {
+          Log.d("BRS", "newText: $query")
+          listViewModel.searchForData(query)
+          return false
+        }
+
+        override fun onQueryTextChange(newText: String): Boolean {
+          Log.d("BRS", "query: $newText")
+          return true
+        }
+      })
+    }
+    return true
   }
 
   private fun observeUIModel() {

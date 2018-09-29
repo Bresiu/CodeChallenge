@@ -40,6 +40,9 @@ interface Dao {
   @Query("SELECT posts.id AS postId, posts.title AS postTitle, posts.body AS postBody, users.email AS userEmail, users.id AS userId FROM posts, users WHERE posts.userId = users.id")
   fun loadAllPostWithUser(): LiveData<List<PostWithUser>>
 
+  @Query("SELECT DISTINCT posts.id AS postId, posts.title AS postTitle, posts.body AS postBody, users.email AS userEmail, users.id AS userId FROM posts, users WHERE posts.userId = users.id AND posts.title LIKE :phrase OR posts.body LIKE :phrase OR users.name LIKE :phrase OR users.email LIKE :phrase")
+  fun searchData(phrase: String): Flowable<List<PostWithUser>>
+
   @Transaction
   @Query("SELECT albums.id AS id, albums.title AS title FROM albums WHERE albums.userId = :userId")
   fun getAlbumsForUser(userId: Long): Flowable<List<AlbumWithPhotos>>

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import com.bresiu.codechallenge.data.entity.EntitiesCombined
 import com.bresiu.codechallenge.model.*
 import com.bresiu.codechallenge.repository.mappers.*
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
@@ -45,6 +46,10 @@ class Repository @Inject internal constructor(private val dbRepository: DBReposi
     dbRepository.savePosts(entitiesCombined.posts)
     dbRepository.saveAlbums(entitiesCombined.albums)
     dbRepository.savePhotos(entitiesCombined.photos)
+  }
+
+  fun searchDataForPhrase(phrase: String): Flowable<List<PostWithUser>> {
+    return dbRepository.searchData(phrase).observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
   }
 
   fun makeAlbumLiveData(userId: Long): LiveData<List<AlbumListItem>> {
