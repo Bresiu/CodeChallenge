@@ -9,7 +9,6 @@
 - Show data in Master/Detail view
   * Master view: post with title and user address. Post can be deleted.
   * Detail view: post with title, body and related albums and photos
-- Implement sticky headers for album titles
 - Use lazy loading with cache for images
 
 Based on
