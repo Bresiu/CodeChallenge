@@ -48,7 +48,7 @@ internal class DBRepository @Inject constructor(private val dao: Dao) {
     return dao.getAlbumsForUser(userId)
   }
 
-  fun searchData(phrase: String): Flowable<List<PostWithUser>> {
+  fun searchData(phrase: String): LiveData<List<PostWithUser>> {
     return dao.searchData(phrase)
   }
 }

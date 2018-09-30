@@ -1,9 +1,6 @@
 package com.bresiu.codechallenge.presentation.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.uimodels.Result
 import com.bresiu.codechallenge.presentation.uimodels.ResultBundle
@@ -15,8 +12,20 @@ import javax.inject.Inject
 
 class ListViewModel @Inject internal constructor(private val repository: Repository) : ViewModel() {
   private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-  private var subject: BehaviorSubject<Long>? = null
-  private var mediatorLiveData: MediatorLiveData<Result<List<PostWithUser>>>? = null
+  private var subject: BehaviorSubject<Long> = BehaviorSubject.create()
+  private var mediatorLiveData: MediatorLiveData<Result<List<PostWithUser>>> = MediatorLiveData()
+  private val searchInput: MutableLiveData<String> = MutableLiveData()
+  private val sourceSwitcher = Transformations.switchMap(searchInput) {
+    if (it.isNotEmpty()) {
+      repository.searchDataForPhrase(formatPhrase(it))
+    } else {
+      repository.getAllData()
+    }
+  }
+
+  private fun formatPhrase(phrase: String): String {
+    return "%$phrase%"
+  }
 
   val liveData: LiveData<Result<List<PostWithUser>>>?
     get() = mediatorLiveData
@@ -28,18 +37,17 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
   }
 
   private fun initListeners() {
-    subject = BehaviorSubject.create()
-    compositeDisposable.add(subject!!.subscribeOn(Schedulers.io())
+    compositeDisposable.add(subject.subscribeOn(Schedulers.io())
         .observeOn(Schedulers.io())
         .subscribe { repository.deletePostById(it) })
   }
 
   private fun initLiveData() {
-    mediatorLiveData = MediatorLiveData()
-    mediatorLiveData!!.addSource(repository.postsUpdates) { postWithUserAddresses ->
+    mediatorLiveData.addSource(sourceSwitcher) { postWithUserAddresses ->
       postDataIfNotEmpty(postWithUserAddresses)
     }
-    mediatorLiveData!!.value = Result.loadingResult()
+    onSearchViewCollapsed()
+    mediatorLiveData.value = Result.loadingResult()
   }
 
   override fun onCleared() {
@@ -47,19 +55,9 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
     super.onCleared()
   }
 
-  fun searchForData(phrase: String) {
-    compositeDisposable.add(repository.searchDataForPhrase("%$phrase%")
-        .subscribe({
-          Log.d("BRS","searched size: " + it.size)
-          postDataIfNotEmpty(it)
-        }, {
-          mediatorLiveData!!.postValue(Result.errorResult(it))
-        }))
-  }
-
   private fun postDataIfNotEmpty(data: List<PostWithUser>) {
     if (data.isNotEmpty()) {
-      mediatorLiveData!!.postValue(Result.successResult(ResultBundle(data)))
+      mediatorLiveData.postValue(Result.successResult(ResultBundle(data)))
     }
   }
 
@@ -68,11 +66,19 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
         .subscribe({
           repository.saveData(it)
         }, {
-          mediatorLiveData!!.postValue(Result.errorResult(it))
+          mediatorLiveData.postValue(Result.errorResult(it))
         }))
   }
 
   fun deletePostById(postId: Long) {
-    subject!!.onNext(postId)
+    subject.onNext(postId)
+  }
+
+  fun onSearchViewCollapsed() {
+    searchInput.postValue("")
+  }
+
+  fun searchForData(query: String) {
+    searchInput.postValue(query)
   }
 }

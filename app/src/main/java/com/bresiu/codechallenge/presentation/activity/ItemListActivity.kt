@@ -1,8 +1,8 @@
 package com.bresiu.codechallenge.presentation.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -43,18 +43,24 @@ class ItemListActivity : BaseActivity(), Injectable {
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.item_list_menu, menu)
-    val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-    searchView.apply {
+    (menu.findItem(R.id.action_search).setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+      override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+        return true
+      }
+
+      override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+        listViewModel.onSearchViewCollapsed()
+        return true
+      }
+    }).actionView as SearchView).apply {
       queryHint = context.getString(R.string.search_hint)
       setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String): Boolean {
-          Log.d("BRS", "newText: $query")
-          listViewModel.searchForData(query)
-          return false
+        override fun onQueryTextChange(newText: String?): Boolean {
+          return true
         }
 
-        override fun onQueryTextChange(newText: String): Boolean {
-          Log.d("BRS", "query: $newText")
+        override fun onQueryTextSubmit(query: String): Boolean {
+          listViewModel.searchForData(query)
           return true
         }
       })
