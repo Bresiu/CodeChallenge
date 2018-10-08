@@ -1,10 +1,11 @@
 <resources>
 	<string name="app_name">Challenge Accepted!</string>
-	<string name="title_item_detail">Item Detail</string>
+	<string name="title_item_detail">Post</string>
 	<string name="delete_post">delete post</string>
 	<string name="photo_description">photo</string>
 	<string name="unknown_error">unknown error</string>
 	<string name="internet_connection_problem">Problem with internet connection</string>
 	<string name="action_search">search</string>
-	<string name="search_hint">search posts...</string>
+	<string name="search_hint">search posts…</string>
+	<string name="no_results_found">no results found…</string>
 </resources>

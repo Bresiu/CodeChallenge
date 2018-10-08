@@ -16,6 +16,7 @@ import com.bresiu.codechallenge.adapters.PostListAdapter
 import com.bresiu.codechallenge.di.Injectable
 import com.bresiu.codechallenge.model.PostWithUser
 import com.bresiu.codechallenge.presentation.fragment.ItemDetailFragment
+import com.bresiu.codechallenge.presentation.uimodels.NoResultsFoundException
 import com.bresiu.codechallenge.presentation.uimodels.Result
 import com.bresiu.codechallenge.presentation.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_item_list.*
@@ -92,10 +93,10 @@ class ItemListActivity : BaseActivity(), Injectable {
 
   private fun onError(error: Throwable?) {
     progress_circular.visibility = View.GONE
-    val errorMessage = if (error is UnknownHostException) {
-      getString(R.string.internet_connection_problem)
-    } else {
-      error?.localizedMessage ?: getString(R.string.unknown_error)
+    val errorMessage = when (error) {
+      is UnknownHostException -> getString(R.string.internet_connection_problem)
+      is NoResultsFoundException -> getString(R.string.no_results_found)
+      else -> error?.localizedMessage ?: getString(R.string.unknown_error)
     }
     showToast(errorMessage)
   }

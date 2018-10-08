@@ -2,6 +2,7 @@ package com.bresiu.codechallenge.presentation.viewmodel
 
 import androidx.lifecycle.*
 import com.bresiu.codechallenge.model.PostWithUser
+import com.bresiu.codechallenge.presentation.uimodels.NoResultsFoundException
 import com.bresiu.codechallenge.presentation.uimodels.Result
 import com.bresiu.codechallenge.presentation.uimodels.ResultBundle
 import com.bresiu.codechallenge.repository.Repository
@@ -58,6 +59,8 @@ class ListViewModel @Inject internal constructor(private val repository: Reposit
   private fun postDataIfNotEmpty(data: List<PostWithUser>) {
     if (data.isNotEmpty()) {
       mediatorLiveData.postValue(Result.successResult(ResultBundle(data)))
+    } else if (!searchInput.value.isNullOrBlank()) {
+      mediatorLiveData.postValue(Result.errorResult(NoResultsFoundException()))
     }
   }
 

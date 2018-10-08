@@ -6,5 +6,5 @@
 	<dimen name="photo_size">1000dp</dimen>
 	<dimen name="delete_icon_size">20dp</dimen>
 	<dimen name="delete_icon_margin">8dp</dimen>
-	<dimen name="post_detail_margin">8dp</dimen>
+	<dimen name="post_detail_margin">6dp</dimen>
 </resources>
