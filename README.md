@@ -11,6 +11,7 @@
   * Detail view: post with title, body and related albums and photos
 - Implement sticky headers for album titles
 - Use lazy loading with cache for images
+- Add search view to search for posts title, content or username and email
 
 Based on
 * Architecture components
